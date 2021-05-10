@@ -50,6 +50,7 @@ public class Pp extends ListenerAdapter {
             event.getChannel().sendMessage(embedBuilder.build()).queue();
         } else if (msg.equalsIgnoreCase(Constants.BotPrefix + "pp")) {
             int ppLength = rng.nextInt(15);
+
             ppLength++;
             String output = "8";
             for (int i = 0; i < ppLength; i++) {
