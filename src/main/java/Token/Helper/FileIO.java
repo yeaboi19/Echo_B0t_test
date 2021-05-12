@@ -40,7 +40,6 @@ public class FileIO {
         HashMap<String ,Integer> wordList = fileIO.getWordList();
         if(isInList(word)){
             word=word.toLowerCase();
-            System.out.println(word);
             int a =wordList.get(word);
             a++;
             wordList.replace(word,a);

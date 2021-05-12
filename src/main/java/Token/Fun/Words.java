@@ -15,13 +15,14 @@ public class Words extends ListenerAdapter {
     FileIO fileIO = new FileIO();
     Splitter splitter = new Splitter();
     AccessControl ac = new AccessControl();
+
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-        String msg=event.getMessage().getContentRaw();
-        String index=splitter.Splitter(msg,1);
-        String other=splitter.Splitter(msg,2);
+        String msg = event.getMessage().getContentRaw();
+        String index = splitter.Splitter(msg, 1);
+        String other = splitter.Splitter(msg, 2);
 
-        if(fileIO.isInList(msg)){
+        if (fileIO.isInList(msg)) {
             fileIO.addWords(msg);
         }
         if (msg.equalsIgnoreCase(Constants.BotPrefix + "getWordList")) {
@@ -35,8 +36,9 @@ public class Words extends ListenerAdapter {
             eb.setDescription(wordStringList);
             event.getChannel().sendMessage(eb.build()).queue();
         }
-        if(ac.AccessControl(event.getAuthor().getId())) {
-             if (index.equalsIgnoreCase(Constants.BotPrefix + "setNewWord")) {
+
+        if (index.equalsIgnoreCase(Constants.BotPrefix + "setNewWord")) {
+            if (ac.AccessControl(event.getAuthor().getId())) {
                 int errCode = -1;
                 if (!other.contains(" ")) {
                     errCode = fileIO.setWords(other);
@@ -48,19 +50,20 @@ public class Words extends ListenerAdapter {
                 } else {
                     event.getChannel().sendMessage("successfully added the word").queue();
                 }
-            } else if (index.equalsIgnoreCase(Constants.BotPrefix + "removeWord")) {
-                int errCode = -1;
-                if (!other.contains(" ")) {
-                    errCode = fileIO.removeFullWord(other);
+            }
+        }
+        if (index.equalsIgnoreCase(Constants.BotPrefix + "removeWord")) {
+            int errCode = -1;
+            if (!other.contains(" ")) {
+                errCode = fileIO.removeFullWord(other);
 
-                }
-                if (errCode == -1) {
-                    event.getChannel().sendMessage("the word must not contain spaces").queue();
-                }else if(errCode==0){
-                    event.getChannel().sendMessage("the word is not in the list").queue();
-                }else{
-                    event.getChannel().sendMessage("successfully removed the word").queue();
-                }
+            }
+            if (errCode == -1) {
+                event.getChannel().sendMessage("the word must not contain spaces").queue();
+            } else if (errCode == 0) {
+                event.getChannel().sendMessage("the word is not in the list").queue();
+            } else {
+                event.getChannel().sendMessage("successfully removed the word").queue();
             }
         }
     }

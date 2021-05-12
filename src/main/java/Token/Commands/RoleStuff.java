@@ -3,6 +3,7 @@ package Token.Commands;
 import Token.Helper.AccessControl;
 import Token.Helper.Splitter;
 import Token.MainThings.Constants;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
@@ -84,7 +85,7 @@ public class RoleStuff extends ListenerAdapter {
             if (ac.AccessControl(authId)) {
                 String roleNam = splitter.Splitter(other, 1);
                 String userId = splitter.Splitter(other, 2);
-                Member user = event.getGuild().getMemberById(userId);
+                Member user = event.getGuild().retrieveMemberById(userId).complete();
                 List<net.dv8tion.jda.api.entities.Role> roles = event.getGuild().getRolesByName(other, true);
                 if (roles.size() != 0 && !other.contains(" ")) {
                     assert user != null;
@@ -113,7 +114,7 @@ public class RoleStuff extends ListenerAdapter {
             if (ac.AccessControl(authId)) {
                 String roleNam = splitter.Splitter(other, 1);
                 String userId = splitter.Splitter(other, 2);
-                Member user = event.getGuild().getMemberById(userId);
+                Member user = event.getGuild().retrieveMemberById(userId).complete();
                 List<net.dv8tion.jda.api.entities.Role> roles = event.getGuild().getRolesByName(other, true);
                 if (roles.size() != 0 && !other.contains(" ")) {
                     assert user != null;
@@ -132,10 +133,27 @@ public class RoleStuff extends ListenerAdapter {
                         event.getChannel().sendMessage("Err1462:Cannot perform action due to a lack of Permission. Missing permission: MANAGE_ROLES").queue();
                     } catch (NumberFormatException e) {
                         event.getChannel().sendMessage("Err1526:The specified ID is not a valid snowflake.").queue();
+                    } catch (Exception e){
+                        event.getChannel().sendMessage(e.getMessage()).queue();
                     }
                 }
             } else {
                 event.getChannel().sendMessage("Err1355:Not enough Permissions!\nAsk softBlue#2732 for more info...").queue();
+            }
+        }
+        if(index.equalsIgnoreCase(Constants.BotPrefix+"getRoleList")){
+            if(ac.AccessControl(authId)){
+                List<Role> roles = event.getGuild().getRoles();
+                StringBuilder outputMessage= new StringBuilder();
+                EmbedBuilder eb = new EmbedBuilder();
+                eb.setTitle("Role List");
+                for (int i = 0; i < roles.size(); i++) {
+                    outputMessage.append("Name: ").append(roles.get(i).getName()).append(" Id: ").append(roles.get(i).getId()).append("\n");
+                }
+                eb.setDescription(outputMessage);
+                event.getChannel().sendMessage(eb.build()).queue();
+
+
             }
         }
     }

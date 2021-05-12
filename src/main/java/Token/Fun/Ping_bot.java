@@ -116,6 +116,8 @@ public class Ping_bot extends ListenerAdapter {
             event.getChannel().sendMessage("<@!"+authID+">").queue();
         } else if(msg.equalsIgnoreCase("debili")){
             event.getChannel().sendMessage("<:mpuahh:830396524776521790>").queue();
+        } else if(msg.equalsIgnoreCase(":die?:")){
+            event.getChannel().sendMessage("<:RAvQNA:830390521003245588>").queue();
         }
     }// ⬛⬜
 }
