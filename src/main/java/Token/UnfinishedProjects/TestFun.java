@@ -4,50 +4,58 @@ import Token.Commands.RoleStuff;
 import Token.Helper.AccessControl;
 import Token.Helper.Splitter;
 import Token.MainThings.Constants;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.GuildChannel;
+import net.dv8tion.jda.api.entities.IPermissionHolder;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.exceptions.HierarchyException;
-import net.dv8tion.jda.api.exceptions.InsufficientPermissionException;
+import net.dv8tion.jda.api.events.role.RoleCreateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.util.List;
-import java.util.Random;
 
 public class TestFun extends ListenerAdapter {
     Splitter splitter = new Splitter();
     AccessControl ac = new AccessControl();
+    String roleId;
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         RoleStuff rs = new RoleStuff();
         String msg = event.getMessage().getContentRaw();
-        String index = splitter.Splitter(msg,1);
-        String other = splitter.Splitter(msg,2);
-        String roleId ="";
-        if(ac.AccessControl(event.getAuthor().getId())){
-            if(index.equalsIgnoreCase(Constants.BotPrefix+"mute")){
-                /*if(!roleExists(event.getGuild().getRoles(), )){
-                    event.getGuild().createRole().setPermissions(Permission.MESSAGE_READ).setName("Muted").setColor(new Color(255, 255, 255)).queue(e->{
-                        roleId=e.getId();
-                    });
-                }*/
+        String index = splitter.Splitter(msg, 1);
+        String other = splitter.Splitter(msg, 2);
+        if (event.getGuild().getRolesByName("Muted", true).size() == 0) {
+            event.getGuild().createRole().setPermissions(Permission.UNKNOWN).setName("Muted").setColor(new Color(255, 255, 255)).queue();
+        }
+
+
+        if (ac.AccessControl(event.getAuthor().getId())) {
+            if (index.equalsIgnoreCase(Constants.BotPrefix + "mute")) {
+                List<GuildChannel> chanList = event.getGuild().getChannels();
+                for (int i = 0; i < chanList.size(); i++) {
+                    IPermissionHolder permHolder = event.getGuild().getRolesByName("Muted",false).get(0);
+                    /*chanList.get(i).getManager().putPermissionOverride(permHolder,Permission.MESSAGE_READ,Permission.MESSAGE_WRITE).queue();*/
+                }
             }
         }
+
     }
 
+    @Override
+    public void onRoleCreate(@NotNull RoleCreateEvent event) {
+        roleId = event.getRole().getId();
+    }
 
-    public int roleExists(List<Role> roles,String roleId){
+    public boolean roleExists(List<Role> roles, String roleId) {
         for (int i = 0; i < roles.size(); i++) {
-            if(roles.get(i).getId().equalsIgnoreCase(roleId)){
-                return 1;
+            if (roles.get(i).getId().equalsIgnoreCase(roleId)) {
+                return true;
             }
         }
-        return 0;
+        return false;
     }
 }
 

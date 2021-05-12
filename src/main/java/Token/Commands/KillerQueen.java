@@ -30,12 +30,9 @@ public class KillerQueen extends ListenerAdapter {
             try {
                 if (index.equalsIgnoreCase(Constants.BotPrefix + "kc")) {
                     loop = Integer.parseInt(other);
-                    if (loop > 0) {
-                        System.out.println(loop);
-                        event.getChannel().sendMessage(clear(channel)).queue();
-                    } else {
-                        event.getChannel().sendMessage("argument must be at least 1").queue();
-                    }
+
+                    event.getChannel().sendMessage(clear(channel)).queue();
+
                 }
             } catch (NumberFormatException e) {
                 event.getChannel().sendMessage("the argument must be a number").queue();
@@ -44,16 +41,24 @@ public class KillerQueen extends ListenerAdapter {
     }
 
     public MessageEmbed clear(TextChannel channel) {
-        List<Message> messages = channel.getHistory().retrievePast(loop).complete();
-
-        messages.removeIf(m -> false);
-        channel.deleteMessages(messages).complete();
-
         EmbedBuilder eb = new EmbedBuilder();
-        eb.setTitle("Removing Messages");
-        eb.setDescription("i have deleted " + loop + " messages");
-        eb.setColor(new Color(rng.nextInt(255), rng.nextInt(255), rng.nextInt(255)));
-        loop = 0;
+        try {
+            List<Message> messages = channel.getHistory().retrievePast(loop).complete();
+
+            messages.removeIf(m -> false);
+            channel.deleteMessages(messages).complete();
+
+            eb.setTitle("Removing Messages");
+            eb.setDescription("i have deleted " + loop + " messages");
+            eb.setColor(new Color(rng.nextInt(255), rng.nextInt(255), rng.nextInt(255)));
+            loop = 0;
+            return eb.build();
+        } catch (IllegalArgumentException e) {
+
+        }
+        eb.setTitle("Error");
+        eb.setDescription("Err405:Must provide at least 2 or at most 100 messages to be deleted.");
+        eb.setColor(new Color(255, 0, 0));
         return eb.build();
     }
 }

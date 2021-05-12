@@ -4,10 +4,7 @@ import Token.Helper.AccessControl;
 import Token.MainThings.Constants;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.apache.http.impl.conn.AbstractClientConnAdapter;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Locale;
 
 public class Ping_bot extends ListenerAdapter {
     @Override
@@ -117,6 +114,8 @@ public class Ping_bot extends ListenerAdapter {
             event.getChannel().sendMessage("<:mpuahh:830396524776521790>").queue();
         } else if (msg.equalsIgnoreCase("ping me")){
             event.getChannel().sendMessage("<@!"+authID+">").queue();
+        } else if(msg.equalsIgnoreCase("debili")){
+            event.getChannel().sendMessage("<:mpuahh:830396524776521790>").queue();
         }
     }// ⬛⬜
 }
