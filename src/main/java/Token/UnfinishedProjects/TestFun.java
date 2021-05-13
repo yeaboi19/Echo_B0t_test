@@ -14,32 +14,42 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TestFun extends ListenerAdapter {
     Splitter splitter = new Splitter();
     AccessControl ac = new AccessControl();
     String roleId;
+    private IPermissionHolder IPermissionHolder;
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-        RoleStuff rs = new RoleStuff();
-        String msg = event.getMessage().getContentRaw();
-        String index = splitter.Splitter(msg, 1);
-        String other = splitter.Splitter(msg, 2);
-        if (event.getGuild().getRolesByName("Muted", true).size() == 0) {
-            event.getGuild().createRole().setPermissions(Permission.UNKNOWN).setName("Muted").setColor(new Color(255, 255, 255)).queue();
-        }
+        try {
+            RoleStuff rs = new RoleStuff();
+            String msg = event.getMessage().getContentRaw();
+            String index = splitter.Splitter(msg, 1);
+            String other = splitter.Splitter(msg, 2);
+            if (event.getGuild().getRolesByName("Muted", true).size() == 0) {
+                event.getGuild().createRole().setPermissions(Permission.UNKNOWN).setName("Muted").setColor(new Color(255, 255, 255)).queue();
+            }
 
 
-        if (ac.AccessControl(event.getAuthor().getId())) {
-            if (index.equalsIgnoreCase(Constants.BotPrefix + "mute")) {
-                List<GuildChannel> chanList = event.getGuild().getChannels();
-                for (int i = 0; i < chanList.size(); i++) {
-                    IPermissionHolder permHolder = event.getGuild().getRolesByName("Muted",false).get(0);
-                    /*chanList.get(i).getManager().putPermissionOverride(permHolder,Permission.MESSAGE_READ,Permission.MESSAGE_WRITE).queue();*/
+            if (ac.AccessControl(event.getAuthor().getId())) {
+                if (index.equalsIgnoreCase(Constants.BotPrefix + "mute")) {
+                    List<GuildChannel> channelList = event.getGuild().getChannels();
+                    IPermissionHolder = event.getGuild().getRolesByName("Muted", false).get(0);
+                    ArrayList<Permission> allowed = new ArrayList<>();
+                    ArrayList<Permission> denied = new ArrayList<>();
+                    allowed.add(Permission.MESSAGE_READ);
+                    denied.add(Permission.MESSAGE_WRITE);
+                    for (int i = 0; i < channelList.size(); i++) {
+                        channelList.get(i).getManager().putPermissionOverride(IPermissionHolder, allowed, denied).queue();
+                    }
                 }
             }
+        } catch (IllegalStateException e) {
+            e.getMessage();
         }
 
     }

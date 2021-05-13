@@ -40,7 +40,7 @@ public class RoleStuff extends ListenerAdapter {
                     } else {
                         permissions = Permission.UNKNOWN;
                     }
-                    event.getGuild().createRole().setPermissions(permissions).setName(name).setColor(new Color(1, 1, 1,1)).queue();
+                    event.getGuild().createRole().setPermissions(permissions).setName(name).setColor(new Color(1, 1, 1, 1)).queue();
                     List<net.dv8tion.jda.api.entities.Role> roles = event.getGuild().getRolesByName(name, false);
                     event.getChannel().sendMessage("Done!").queue();
                     event.getChannel().deleteMessageById(msgId).queue();
@@ -133,7 +133,7 @@ public class RoleStuff extends ListenerAdapter {
                         event.getChannel().sendMessage("Err1462:Cannot perform action due to a lack of Permission. Missing permission: MANAGE_ROLES").queue();
                     } catch (NumberFormatException e) {
                         event.getChannel().sendMessage("Err1526:The specified ID is not a valid snowflake.").queue();
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         event.getChannel().sendMessage(e.getMessage()).queue();
                     }
                 }
@@ -141,10 +141,10 @@ public class RoleStuff extends ListenerAdapter {
                 event.getChannel().sendMessage("Err1355:Not enough Permissions!\nAsk softBlue#2732 for more info...").queue();
             }
         }
-        if(index.equalsIgnoreCase(Constants.BotPrefix+"getRoleList")){
-            if(ac.AccessControl(authId)){
+        if (index.equalsIgnoreCase(Constants.BotPrefix + "getRoleList")) {
+            if (ac.AccessControl(authId)) {
                 List<Role> roles = event.getGuild().getRoles();
-                StringBuilder outputMessage= new StringBuilder();
+                StringBuilder outputMessage = new StringBuilder();
                 EmbedBuilder eb = new EmbedBuilder();
                 eb.setTitle("Role List");
                 for (int i = 0; i < roles.size(); i++) {
@@ -155,6 +155,8 @@ public class RoleStuff extends ListenerAdapter {
 
 
             }
+
+
         }
     }
 }

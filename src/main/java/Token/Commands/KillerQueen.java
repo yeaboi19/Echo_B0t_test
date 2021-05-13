@@ -22,7 +22,12 @@ public class KillerQueen extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-        TextChannel channel = event.getTextChannel();
+        TextChannel channel = null;
+        try {
+            channel = event.getTextChannel();
+        }catch (IllegalStateException e){
+            e.getMessage();
+        }
         String msg = event.getMessage().getContentRaw();
         String index = splitter.Splitter(msg, 1);
         String other = splitter.Splitter(msg, 2);

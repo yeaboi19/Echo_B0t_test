@@ -6,6 +6,8 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Random;
+
 public class Ping_bot extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
@@ -82,7 +84,12 @@ public class Ping_bot extends ListenerAdapter {
                 event.getChannel().sendMessage("va zd").queue();
             }
         } else if (msg.equalsIgnoreCase("bacho")) {
-            event.getChannel().sendMessage("<:bacho:834315747870244864>").queue();
+            Random rng = new Random();
+            if(rng.nextInt(101)%2==0){
+                event.getChannel().sendMessage("<:TheBachoDrip:842288595334332426>").queue();
+            }else{
+                event.getChannel().sendMessage("<:bacho:834315747870244864>").queue();
+            }
         } else if (msg.equalsIgnoreCase("testpilot69")) {
             event.getChannel().sendMessage("you have confirmed that you have 2 braincells").queue();
         } else if (msg.equalsIgnoreCase(":thonk:")){
