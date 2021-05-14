@@ -3,12 +3,15 @@ package Token.Helper;
 import Token.MainThings.Constants;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.internal.entities.UserById;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.time.OffsetDateTime;
+import java.util.Locale;
 import java.util.Random;
 
 public class User_info extends ListenerAdapter {
@@ -37,7 +40,6 @@ public class User_info extends ListenerAdapter {
                 embedBuilder.setColor(new Color(rng.nextInt(255),rng.nextInt(255),rng.nextInt(255)));
                 embedBuilder.setThumbnail(event.getAuthor().getAvatarUrl());
                 embedBuilder.setFooter(event.getAuthor().getAsTag());
-                event.getChannel().sendMessage(embedBuilder.build()).queue();
             }else{
                 String id="";
                 for (int i = 3; i < other.length()-1; i++) {
@@ -58,8 +60,8 @@ public class User_info extends ListenerAdapter {
                 embedBuilder.setColor(new Color(rng.nextInt(255),rng.nextInt(255),rng.nextInt(255)));
                 embedBuilder.setThumbnail(mem.getUser().getAvatarUrl());
                 embedBuilder.setFooter(mem.getUser().getAsTag());
-                event.getChannel().sendMessage(embedBuilder.build()).queue();
             }
+            event.getChannel().sendMessage(embedBuilder.build()).queue();
         }
     }
 }

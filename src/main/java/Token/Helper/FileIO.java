@@ -23,14 +23,16 @@ public class FileIO {
 
     public HashMap<String, Integer> getWordList() {
         HashMap<String, Integer> WordList = new HashMap<>();
-        try {
-            FileInputStream fileInputStream = new FileInputStream(filePath.wordListPath);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            WordList = (HashMap<String ,Integer>) objectInputStream.readObject();
-        } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
-        } catch (ClassCastException e) {
-            e.printStackTrace();
+        if(new File(filePath.wordListPath).exists()){
+            try {
+                FileInputStream fileInputStream = new FileInputStream(filePath.wordListPath);
+                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+                WordList = (HashMap<String ,Integer>) objectInputStream.readObject();
+            } catch (ClassNotFoundException | IOException e) {
+                e.printStackTrace();
+            } catch (ClassCastException e) {
+                e.printStackTrace();
+            }
         }
         return WordList;
     }
@@ -57,7 +59,10 @@ public class FileIO {
 
     public int setWords(String word) {
         FileIO fileIO = new FileIO();
-        HashMap<String ,Integer> wordList = fileIO.getWordList();
+        HashMap<String ,Integer> wordList = new HashMap<>();
+        if(new File(filePath.wordListPath).exists()){
+            wordList = fileIO.getWordList();
+        }
         if(!isInList(word)){
             word=word.toLowerCase();
             wordList.put(word,0);

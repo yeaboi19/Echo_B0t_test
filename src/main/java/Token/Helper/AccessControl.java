@@ -17,7 +17,9 @@ public class AccessControl {
                 return true;
             } else if (authId.equalsIgnoreCase("616005188829839412")) {//levanis id
                 return true;
-            } else {
+            } else if (authId.equalsIgnoreCase("772892222428282920")) { //supergirl
+                return true;
+            }else {
                 return false;
             }
         }
