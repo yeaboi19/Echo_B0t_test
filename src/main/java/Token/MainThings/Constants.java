@@ -1,7 +1,7 @@
 package Token.MainThings;
 
 public class Constants {
-    public static String BotPrefix="eb!";
+    public static String BotPrefix = "eb!";
 }
 
 /*

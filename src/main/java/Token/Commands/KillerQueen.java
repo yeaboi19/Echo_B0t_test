@@ -13,6 +13,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import java.awt.*;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class KillerQueen extends ListenerAdapter {
     Random rng = new Random();
@@ -32,7 +33,9 @@ public class KillerQueen extends ListenerAdapter {
                     loop = Integer.parseInt(other);
                     if (loop > 0) {
                         System.out.println(loop);
-                        event.getChannel().sendMessage(clear(channel)).queue();
+                        event.getChannel().sendMessage(clear(channel)).queue(e->{
+                            e.delete().queueAfter(2600, TimeUnit.MILLISECONDS);
+                        });
                     } else {
                         event.getChannel().sendMessage("argument must be at least 1").queue();
                     }

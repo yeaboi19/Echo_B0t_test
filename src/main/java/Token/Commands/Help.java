@@ -41,7 +41,7 @@ public class Help extends ListenerAdapter {
             embedBuilder.setFooter("skidaadle skodoodle ur penis is now a noodle");
             event.getChannel().sendMessage(embedBuilder.build()).queue();
         }
-        if (index.equalsIgnoreCase(Constants.BotPrefix + "help") && other.equalsIgnoreCase("emoji ")) {
+        if (index.equalsIgnoreCase(Constants.BotPrefix + "help") && other.equalsIgnoreCase("emoji")) {
             embedBuilder.setTitle("Emoji help");
             embedBuilder.setDescription("""
                     @ everyone - <:vibecheck:787006649281937438>
