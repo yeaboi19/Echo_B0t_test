@@ -33,7 +33,7 @@ public class KillerQueen extends ListenerAdapter {
                     loop = Integer.parseInt(other);
                     if (loop > 0) {
                         System.out.println(loop);
-                        event.getChannel().sendMessage(clear(channel)).queue(e->{
+                        event.getChannel().sendMessage(clear(channel)).queue(e -> {
                             e.delete().queueAfter(2600, TimeUnit.MILLISECONDS);
                         });
                     } else {
@@ -47,18 +47,23 @@ public class KillerQueen extends ListenerAdapter {
     }
 
     public MessageEmbed clear(TextChannel channel) {
-        List<Message> messages = channel.getHistory().retrievePast(loop).complete();
+        try {
+            List<Message> messages = channel.getHistory().retrievePast(loop).complete();
+            messages.removeIf(m -> false);
+            channel.deleteMessages(messages).complete();
 
-        messages.removeIf(m -> false);
-        channel.deleteMessages(messages).complete();
-
-        EmbedBuilder eb = new EmbedBuilder();
-        eb.setTitle("Removing Messages");
-        eb.setDescription("i have deleted " + loop + " messages");
-        eb.setColor(new Color(rng.nextInt(255), rng.nextInt(255), rng.nextInt(255)));
-        loop = 0;
-        return eb.build();
+            EmbedBuilder eb = new EmbedBuilder();
+            eb.setTitle("Removing Messages");
+            eb.setDescription("i have deleted " + loop + " messages");
+            eb.setColor(new Color(rng.nextInt(255), rng.nextInt(255), rng.nextInt(255)));
+            loop = 0;
+            return eb.build();
+        } catch (IllegalArgumentException e) {
+            channel.sendMessage("Err184:Message retrieval limit is between 1 and 100 messages. No more, no less.").queue();
+        }
+        return null;
     }
 }
+
 
 //Sample Code : https://gist.github.com/RezzedUp/09c99f33e7a311f9d6682b38d6afd846

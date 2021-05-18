@@ -76,7 +76,7 @@ public class Ping_bot extends ListenerAdapter {
         } else if (msg.equalsIgnoreCase("rogor xar") || msg.equalsIgnoreCase("rogor xar?") || msg.equalsIgnoreCase("rogor xarr?")) {
             event.getChannel().sendMessage("Nichivooo").queue();
         } else if (msg.equalsIgnoreCase("movedi") || msg.equalsIgnoreCase("zd")) {
-            if (authID.equalsIgnoreCase("823285493939699742") || authID.equalsIgnoreCase("837386035667009558")) {
+            if (authID.equalsIgnoreCase("823285493939699742") || authID.equalsIgnoreCase("837386035667009558") && authID.equalsIgnoreCase("841664239876964412")) {
                 event.getChannel().sendMessage("https://tenor.com/view/cruella-emma-stone-flame-fire-gif-20410154").queue();
             } else if (authID.equalsIgnoreCase("772161064955019274")) {
                 event.getChannel().sendMessage("vaime chemi shemqnmelis fani movidaa <:781181016084971552:799752480292339765>").queue();
