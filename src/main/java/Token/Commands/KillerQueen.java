@@ -23,13 +23,14 @@ public class KillerQueen extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
-        TextChannel channel = event.getTextChannel();
+
         String msg = event.getMessage().getContentRaw();
         String index = splitter.Splitter(msg, 1);
         String other = splitter.Splitter(msg, 2);
         if (ac.AccessControl(event.getAuthor().getId())) {
             try {
                 if (index.equalsIgnoreCase(Constants.BotPrefix + "kc")) {
+                    TextChannel channel = event.getTextChannel();
                     loop = Integer.parseInt(other);
                     if (loop > 0) {
                         System.out.println(loop);
@@ -47,21 +48,22 @@ public class KillerQueen extends ListenerAdapter {
     }
 
     public MessageEmbed clear(TextChannel channel) {
+        EmbedBuilder eb = new EmbedBuilder();
         try {
             List<Message> messages = channel.getHistory().retrievePast(loop).complete();
             messages.removeIf(m -> false);
             channel.deleteMessages(messages).complete();
 
-            EmbedBuilder eb = new EmbedBuilder();
             eb.setTitle("Removing Messages");
             eb.setDescription("i have deleted " + loop + " messages");
             eb.setColor(new Color(rng.nextInt(255), rng.nextInt(255), rng.nextInt(255)));
             loop = 0;
             return eb.build();
         } catch (IllegalArgumentException e) {
-            channel.sendMessage("Err184:Message retrieval limit is between 1 and 100 messages. No more, no less.").queue();
+            eb.setDescription("Err184:Message retrieval limit is between 1 and 100 messages. No more, no less.");
+            eb.setColor(new Color(255, 0, 0));
         }
-        return null;
+        return eb.build();
     }
 }
 

@@ -24,8 +24,8 @@ public class Play extends ListenerAdapter {
                 TextChannel channel = event.getChannel();
                 Member self = event.getMember().getGuild().getSelfMember();
                 GuildVoiceState selfVoiceState = self.getVoiceState();
-                if(!selfVoiceState.inVoiceChannel()){
-                    channel.sendMessage("execute command "+Constants.BotPrefix+"join first").queue();
+                if (!selfVoiceState.inVoiceChannel()) {
+                    channel.sendMessage("execute command " + Constants.BotPrefix + "join first").queue();
                     return;
                 }
                 Member member = event.getMember();
@@ -35,12 +35,12 @@ public class Play extends ListenerAdapter {
                     return;
                 }
 
-                if(!memberVoiceState.getChannel().equals(selfVoiceState.getChannel())){
+                if (!memberVoiceState.getChannel().equals(selfVoiceState.getChannel())) {
                     channel.sendMessage("bot and user must be in a same VC").queue();
                     return;
                 }
 
-                PlayerManager.getINSTANCE().loadAndPlay(channel,other);
+                PlayerManager.getINSTANCE().loadAndPlay(channel, other);
             }
         }
     }

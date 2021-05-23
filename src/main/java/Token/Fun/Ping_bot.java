@@ -85,7 +85,7 @@ public class Ping_bot extends ListenerAdapter {
             }
         } else if (msg.equalsIgnoreCase("bacho")) {
             Random rng = new Random();
-            if (rng.nextInt(101) % 2 == 0) {
+            if (rng.nextInt(101) % 3 == 0) {
                 event.getChannel().sendMessage("<:TheBachoDrip:842288595334332426>").queue();
             } else {
                 event.getChannel().sendMessage("<:bacho:834315747870244864>").queue();

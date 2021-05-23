@@ -35,8 +35,8 @@ public class Main extends ListenerAdapter {
                         new Annoy(), new Joke(), new User_info(), new CommandAvalebility(),
                         new Invite(), new Dont(), new Alphabet(), new Console_input(),
                         new Calculator(), new See(), new Words(), new KillerQueen(),
-                        new PrivateMessages(), new Delay(), new GifTest(),new Mute(),
-                        new TestFun(),new Play(),new Join(),new Leave()
+                        new PrivateMessages(), new Delay(), new GifTest(), new Mute(),
+                        new TestFun(), new Play(), new Join(), new Leave(), new RandomCmd()
                 ).enableCache(CacheFlag.VOICE_STATE)
                 .build().awaitReady();
 

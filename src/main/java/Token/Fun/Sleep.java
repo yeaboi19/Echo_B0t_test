@@ -1,6 +1,7 @@
 package Token.Fun;
 
 import Token.Helper.Splitter;
+import Token.MainThings.Constants;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -10,7 +11,7 @@ public class Sleep extends ListenerAdapter {
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String msg=event.getMessage().getContentRaw();
         Splitter splitter = new Splitter();
-        if(splitter.Splitter(msg,1).equalsIgnoreCase("!sleep")){
+        if(splitter.Splitter(msg,1).equalsIgnoreCase(Constants.BotPrefix+"sleep")){
             String[] splited = splitter.Splitter(msg,2).split(" ");
             boolean is_tru1=true;
             boolean is_tru2=true;

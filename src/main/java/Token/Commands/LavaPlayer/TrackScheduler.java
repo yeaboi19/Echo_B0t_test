@@ -35,7 +35,7 @@ public class TrackScheduler extends AudioEventAdapter {
         }
     }
 
-    public void clearQueue(){
-        this.queue=new LinkedBlockingDeque<>();
+    public void clearQueue() {
+        this.queue = new LinkedBlockingDeque<>();
     }
 }

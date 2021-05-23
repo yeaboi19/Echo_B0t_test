@@ -25,6 +25,7 @@ public class Mute extends ListenerAdapter {
     String other;
     MessageChannel channel;
     private net.dv8tion.jda.api.entities.IPermissionHolder IPermissionHolder;
+    boolean isRoleBeingCreated=false;
 
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
@@ -36,6 +37,7 @@ public class Mute extends ListenerAdapter {
         if (index.equalsIgnoreCase(Constants.BotPrefix + "mute")) {
             if (ac.AccessControl(event.getAuthor().getId())) {
                 if (event.getGuild().getRolesByName("Muted", true).size() == 0) {
+                    isRoleBeingCreated=true;
                     event.getGuild().createRole().setPermissions(Permission.UNKNOWN).setName("Muted").setColor(new Color(255, 255, 255)).queue();
                 } else {
                     try {
@@ -81,18 +83,21 @@ public class Mute extends ListenerAdapter {
 
     @Override
     public void onRoleCreate(@NotNull RoleCreateEvent event) {
-        List<GuildChannel> channelList = event.getGuild().getChannels();
-        IPermissionHolder = event.getGuild().getRolesByName("Muted", false).get(0);
-        Role role = (Role) IPermissionHolder;
-        ArrayList<Permission> allowed = new ArrayList<>();
-        ArrayList<Permission> denied = new ArrayList<>();
-        allowed.add(Permission.MESSAGE_READ);
-        denied.add(Permission.MESSAGE_WRITE);
-        for (int i = 0; i < channelList.size(); i++) {
-            channelList.get(i).getManager().putPermissionOverride(IPermissionHolder, allowed, denied).queue();
+        if(isRoleBeingCreated) {
+            List<GuildChannel> channelList = event.getGuild().getChannels();
+            IPermissionHolder = event.getGuild().getRolesByName("Muted", false).get(0);
+            Role role = (Role) IPermissionHolder;
+            ArrayList<Permission> allowed = new ArrayList<>();
+            ArrayList<Permission> denied = new ArrayList<>();
+            allowed.add(Permission.MESSAGE_READ);
+            denied.add(Permission.MESSAGE_WRITE);
+            for (int i = 0; i < channelList.size(); i++) {
+                channelList.get(i).getManager().putPermissionOverride(IPermissionHolder, allowed, denied).queue();
+            }
+            event.getGuild().addRoleToMember(other, role).queue();
+            channel.sendMessage("Created Role Muted and ").queue();
+            channel.sendMessage("Muted " + event.getGuild().getMemberById(other).getUser().getAsTag()).queue();
         }
-        event.getGuild().addRoleToMember(other, role).queue();
-        channel.sendMessage("Created Role Muted and ").queue();
-        channel.sendMessage("Muted " + event.getGuild().getMemberById(other).getUser().getAsTag()).queue();
     }
 }
+//351814

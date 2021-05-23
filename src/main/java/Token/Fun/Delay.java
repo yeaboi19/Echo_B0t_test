@@ -19,8 +19,12 @@ public class Delay extends ListenerAdapter {
             String time = splitter.Splitter(other, 1);
             String message = splitter.Splitter(other, 2);
             try {
+                event.getChannel().sendMessage("sending message "+message+" in "+time+" seconds...").queue(e->{
+                    e.delete().queueAfter(2,TimeUnit.SECONDS);
+                    event.getMessage().delete().queueAfter(2,TimeUnit.SECONDS);
+                });
                 event.getChannel().sendMessage(message).queueAfter(Integer.parseInt(time), TimeUnit.SECONDS);
-            } catch (NumberFormatException e) {
+            } catch (IllegalArgumentException e) {
                 event.getChannel().sendMessage("Err770: incorrect syntax || " + Constants.BotPrefix + "delay [seconds] [message]").queue();
             }
         }

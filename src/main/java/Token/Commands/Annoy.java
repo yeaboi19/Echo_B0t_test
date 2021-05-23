@@ -28,9 +28,10 @@ public class Annoy extends ListenerAdapter {
 
         String index = splitter.Splitter(msg, 1);
         String other = splitter.Splitter(msg, 2);
-        if (accessControl.AccessControl(event.getAuthor().getId())) {
-            if (!wbB(event.getAuthor().getId())) {
-                if (index.equalsIgnoreCase(Constants.BotPrefix + "ann") && other.equalsIgnoreCase("")) {
+        if (index.equalsIgnoreCase(Constants.BotPrefix + "ann") && other.equalsIgnoreCase("")) {
+            if (accessControl.AccessControl(event.getAuthor().getId())) {
+                if (!wbB(event.getAuthor().getId())) {
+
                     embedBuilder.setDescription("Not enough info to spam...\n" +
                             "Correct Syntax :\n" +
                             "!ann <number> <message>");
@@ -48,6 +49,8 @@ public class Annoy extends ListenerAdapter {
 
                     }
                 }
+            }else{
+                event.getChannel().sendMessage("Can't execute command...\nplease contact softblue for more info...").queue();
             }
         }
     }

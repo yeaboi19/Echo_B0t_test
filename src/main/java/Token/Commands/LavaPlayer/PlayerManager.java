@@ -48,10 +48,10 @@ public class PlayerManager {
         this.audioPlayerManager.loadItemOrdered(musicManager, TrackURL, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack audioTrack) {
-                if(TrackURL.equalsIgnoreCase("Clear")){
+                if (TrackURL.equalsIgnoreCase("Clear")) {
                     musicManager.scheduler.clearQueue();
                     channel.sendMessage("Cleared queue").queue();
-                }else{
+                } else {
                     musicManager.scheduler.queue(audioTrack);
                     channel.sendMessage("Adding to queue: ")
                             .append(audioTrack.getInfo().title).queue();
