@@ -125,6 +125,8 @@ public class Ping_bot extends ListenerAdapter {
             event.getChannel().sendMessage("<:mpuahh:830396524776521790>").queue();
         } else if (msg.equalsIgnoreCase(":die?:")) {
             event.getChannel().sendMessage("<:RAvQNA:830390521003245588>").queue();
+        } else if (msg.equalsIgnoreCase("dark souls") && !event.getAuthor().getId().equalsIgnoreCase("700747192784125972")){
+            event.getChannel().sendMessage("hello "+event.getAuthor().getAsMention()).queue();
         }
     }// ⬛⬜
 }

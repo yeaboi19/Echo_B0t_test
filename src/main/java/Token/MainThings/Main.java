@@ -1,6 +1,7 @@
 package Token.MainThings;
 
 
+
 //import Token.UnfinishedProjects.NewDepTest;
 
 import Token.Commands.*;
@@ -27,7 +28,7 @@ import javax.security.auth.login.LoginException;
 public class Main extends ListenerAdapter {
     public static void main(String[] args) throws LoginException, InterruptedException {
         JDA Echo_Bot = JDABuilder.createDefault(Secret.token).setChunkingFilter(ChunkingFilter.ALL).setMemberCachePolicy(MemberCachePolicy.ALL).enableIntents(GatewayIntent.GUILD_MEMBERS)
-                .setActivity(Activity.streaming(Constants.BotPrefix + "help", "https://youtu.be/dQw4w9WgXcQ"))
+                .setActivity(Activity.competing("Cumzone"))
                 .addEventListeners(
                         new Ping(), new Rename(), new HighLow(), new RoleStuff(),
                         new RussianRoulette(), new GuildGets(), new ListAll(),
