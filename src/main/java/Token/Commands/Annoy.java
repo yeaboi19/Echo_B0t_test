@@ -12,11 +12,7 @@ public class Annoy extends ListenerAdapter {
 
     public boolean wbB(String AuthorId) {
         String idBot = "804600135039713360";
-        boolean writtenByBot = false;
-        if (idBot.equalsIgnoreCase(AuthorId)) {
-            writtenByBot = true;
-        }
-        return writtenByBot;
+        return idBot.equalsIgnoreCase(AuthorId);
     }
 
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
@@ -31,9 +27,10 @@ public class Annoy extends ListenerAdapter {
         if (index.equalsIgnoreCase(Constants.BotPrefix + "ann")) {
             if (accessControl.AccessControl(event.getAuthor().getId())) {
                 if (!wbB(event.getAuthor().getId()) && !event.getAuthor().isBot()) {
-                    embedBuilder.setDescription("Not enough info to spam...\n" +
-                            "Correct Syntax :\n" +
-                            "!ann <number> <message>");
+                    embedBuilder.setDescription("""
+                            Not enough info to spam...
+                            Correct Syntax :
+                            !ann <number> <message>""");
                     event.getChannel().sendMessage(embedBuilder.build()).queue();
                 } else if (index.equalsIgnoreCase(Constants.BotPrefix + "ann")) {
 
