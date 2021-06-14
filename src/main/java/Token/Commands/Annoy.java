@@ -28,14 +28,12 @@ public class Annoy extends ListenerAdapter {
 
         String index = splitter.Splitter(msg, 1);
         String other = splitter.Splitter(msg, 2);
-        if (index.equalsIgnoreCase(Constants.BotPrefix + "ann") && other.equalsIgnoreCase("")) {
+        if (index.equalsIgnoreCase(Constants.BotPrefix + "ann")) {
             if (accessControl.AccessControl(event.getAuthor().getId())) {
-                if (!wbB(event.getAuthor().getId())) {
-
+                if (!wbB(event.getAuthor().getId()) && !event.getAuthor().isBot()) {
                     embedBuilder.setDescription("Not enough info to spam...\n" +
                             "Correct Syntax :\n" +
                             "!ann <number> <message>");
-
                     event.getChannel().sendMessage(embedBuilder.build()).queue();
                 } else if (index.equalsIgnoreCase(Constants.BotPrefix + "ann")) {
 
@@ -49,7 +47,7 @@ public class Annoy extends ListenerAdapter {
 
                     }
                 }
-            }else{
+            } else {
                 event.getChannel().sendMessage("Can't execute command...\nplease contact softblue for more info...").queue();
             }
         }
